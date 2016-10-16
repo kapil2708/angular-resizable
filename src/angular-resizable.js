@@ -23,7 +23,8 @@ angular.module('angularResizable', [])
                 rFlex: '=',
                 rGrabber: '@',
                 rDisabled: '@',
-                rNoThrottle: '='
+                rNoThrottle: '=',
+                rDisableResize: '='
             },
             link: function(scope, element, attr) {
                 var flexBasis = 'flexBasis' in document.documentElement.style ? 'flexBasis' :
@@ -111,6 +112,9 @@ angular.module('angularResizable', [])
                     element.removeClass('no-transition');
                 };
                 var dragStart = function(e, direction) {
+                    if(scope.rDisableResize){
+                        return;
+                    }
                     dragDir = direction;
                     axis = dragDir === 'left' || dragDir === 'right' ? 'x' : 'y';
                     start = axis === 'x' ? getClientX(e) : getClientY(e);
